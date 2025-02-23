@@ -4,16 +4,16 @@ from PyQt5.QtWidgets import (
     QTextEdit, QListWidget, QPushButton,
     QHBoxLayout, QVBoxLayout
 )
-
+#Створення вікна
 window = QWidget()
 
-window.resize(900, 600)
+window.resize(1200, 900)
 window.setWindowTitle("Замітки")
 
 lbl_list_note = QLabel('Список заміток')
 
 list_notes = QListWidget()
-
+#Створення кнопок додавання та видалення заміток
 btn_create_note = QPushButton("Створити замітку")
 btn_remove_note = QPushButton("Видалити замітку")
 
@@ -23,13 +23,13 @@ h1.addWidget(btn_create_note)
 h1.addWidget(btn_remove_note)
 
 btn_save_note = QPushButton("Зберегти замітку")
-
+#Текст для списка тегів
 lbl_list_tag = QLabel("Список тегів")
 
 list_tags = QListWidget()
 
 ln_ed_tag = QLineEdit()
-
+#Створення кнопок для додавання та відкріплення замітки
 btn_add_too_notes = QPushButton("Додати до замітки")
 btn_unconnect_of_notes = QPushButton('Відкрипити від замітки')
 
@@ -37,9 +37,10 @@ h2 = QHBoxLayout()
 
 h2.addWidget(btn_add_too_notes)
 h2.addWidget(btn_unconnect_of_notes)
-
+#Кнопка для пошуку за тегом
 search_notes_by_tags = QPushButton("Шукати замітки за тегом")
-
+search_notes_by_tags.setObjectName("favoriteButton")
+#Головний макет
 v_main = QVBoxLayout()
 
 v_main.addWidget(lbl_list_note)

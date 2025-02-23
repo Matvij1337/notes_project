@@ -1,6 +1,8 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QInputDialog
+from style import *
 app = QApplication([])
+app.setStyleSheet(style)
 from notes import *
 
 import json
@@ -11,14 +13,14 @@ notes = {
         "Теги" : ["Англієць", "Великобританія"]
     },
 }
-
+#Показ самої замітки
 def show_notes():
     key = list_notes.selectedItems()[0].text()
     Large_area_for_notes.setText(notes[key]["Текст"])
     list_tags.clear()
     list_tags.addItems(notes[key]["Теги"])
 list_notes.itemClicked.connect(show_notes)
-
+#Подключаемо кнопки для того щоб добавити замітку
 def add_note():
     note_name, ok = QInputDialog.getText(window, "Додати замітку", "Назва замітки")
     if ok and note_name != "":
@@ -26,7 +28,7 @@ def add_note():
         list_notes.addItem(note_name)
         list_tags.addItems(notes[note_name]["Теги"])
 btn_create_note.clicked.connect(add_note)
-
+#Подключаемо кнопки для того щоб зберегти замітку
 def save_note():
     if list_notes.selectedItems():
         key = list_notes.selectedItems()[0].text()
@@ -36,7 +38,7 @@ def save_note():
     else:
         print("Замітка для збереження не вибрана!")
 btn_save_note.clicked.connect(save_note)
-
+#Подключаемо кнопки для видалення замітки
 def del_note():
     if list_notes.selectedItems():
         key = list_notes.selectedItems()[0].text()
@@ -50,7 +52,7 @@ def del_note():
     else:
         print("Замітка для вилучення не обрана!")
 btn_remove_note.clicked.connect(del_note)
-
+#підключаемо кнопки для додавання тега
 def add_tag():
     if list_notes.selectedItems():
         key = list_notes.selectedItems()[0].text()
@@ -64,7 +66,7 @@ def add_tag():
     else:
         print("Замітка для додавання тега не обрана")
 btn_add_too_notes.clicked.connect(add_tag)
-
+#підключаемо кнопки для видалення тега
 def del_tag():
     if list_notes.selectedItems():
         key = list_notes.selectedItems()[0].text()
@@ -75,7 +77,7 @@ def del_tag():
         with open('notes_data.json', "w") as file:
             json.dump(notes, file)
 btn_unconnect_of_notes.clicked.connect(del_tag)
-
+#підключаемо кнопки для пошуку тега
 def search_tag():
     tag = ln_ed_tag.text()
     if search_notes_by_tags.text() == "Шукати замітки за тегом" and tag:
@@ -98,9 +100,10 @@ search_notes_by_tags.clicked.connect(search_tag)
 #with open("notes_data.json", "w", encoding='utf-8') as file:
     #json.dump(notes, file)
 
+#Читання json
 with open("notes_data.json") as file:
     notes = json.load(file)
 list_notes.addItems(notes)
-
+#Запуск програми
 window.show()
 app.exec_()
